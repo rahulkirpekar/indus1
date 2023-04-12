@@ -1,0 +1,79 @@
+ServletConfig
+
+stringdata---xml---->servletconfig---servlet----get Data from servlet config
+
+Employee e = new Employee();
+
+ServletContext
+
+stringdata---xml---->servletcontext---servlet----get Data from servlet config
+------------------------------------------------------------------
+
+Data Sharing Scope:-
+--------------------
+1) page---[this.rno=rno]---current page 
+
+******************
+2) request
+******************
+	1) request.setAttribute(String key, Object value);
+	2) Object value = request.getAttribute(String key);
+	3) request.removeAttribute(String key);
+
+*********************************
+3) session
+*********************************
+	1) session.setAttribute(String key, Object value);
+	2) Object value = session.getAttribute(String key);
+	3) session.removeAttribute(String key);
+
+*********************************
+4) application[ServletContext]
+*********************************
+	ServletContext application = getServletContext();
+	
+	1) application.setAttribute(String key, Object value);
+	2) Object value = application.getAttribute(String key);
+	3) application.removeAttribute(String key);
+
+
+request chaining:-
+------------------
+
+servlet1(request,response)--->servlet2(request,response)--->servlet3(request,response)
+
+	request.setAttribute(String key,Object obj);
+
+servlet1(request,response):-
+----------------------------
+	Student s= new Student(1,"rahul",12);
+
+	request.setAttribute("studentobj",s);
+
+	RequestDispacher rd = request.getRequestDispacher("servlet2");
+
+	rd.forward(request,response);
+		|
+	------------------
+servlet2(request,reponse):-
+---------------------------
+Object object = request.getAttribute(String key);	
+
+Student s = (Student)request.getAttribute("studentobj");	
+
+System.out.println(s.rno + " " + s.name + " "+s.std);
+
+	RequestDispacher rd = request.getRequestDispacher("servlet3");
+
+	rd.forward(request,response);
+		|
+	------------------
+servlet3(request,reponse):-
+---------------------------
+
+Student s = (Student)request.getAttribute("studentobj");	
+
+System.out.println(s.rno + " " + s.name + " "+s.std);
+
+
+
